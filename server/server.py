@@ -1,11 +1,7 @@
-import os
 from flask import Flask, render_template
 
 import data_mos_ru_helpers as dms_helper
 
-
-# ключ API сервиса https://apidata.mos.ru
-os.environ['DATA_MOS_RU_API_KEY'] = '40efbeeb79728efe0bc580f6174da03d'
 
 app = Flask(__name__)
 
@@ -23,4 +19,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
