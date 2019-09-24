@@ -13,7 +13,7 @@ pip install virtualenv
 #### Установка
 ```bash
 git clone https://github.com/arkuz/doctor_crm
-cd tm_bot
+cd doctor_crm
 virtualenv env
 env/scripts/activate
 pip install -r requirements.txt
