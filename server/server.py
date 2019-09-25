@@ -10,13 +10,12 @@ app = Flask(__name__)
 def index():
     title = 'Список больниц Москвы'
     clinics_list = dms_helper.fetch_clinics_list()
-    if clinics_list:
-        clinics_list = dms_helper.extract_clinics_data(clinics_list)
+    extract_clinics_list = dms_helper.extract_clinics_data(clinics_list) if clinics_list else None
     return render_template('index.html',
                            title=title,
-                           clinics_list=clinics_list,
+                           clinics_list=extract_clinics_list,
                            )
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
