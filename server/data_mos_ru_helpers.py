@@ -2,7 +2,7 @@ import os
 import requests
 
 
-def get_clinics_list() -> list:
+def fetch_clinics_list() -> list:
     """ Функция для получения списка больниц от сервиса https://apidata.mos.ru. """
     url = 'https://apidata.mos.ru/v1/datasets/517/rows'
     params = {
