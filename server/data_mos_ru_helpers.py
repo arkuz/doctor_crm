@@ -1,8 +1,9 @@
 import os
 import requests
+from typing import Iterator
 
 
-def fetch_clinics_list() -> list:
+def fetch_clinics_list() -> Iterator[dict]:
     """ Функция для получения списка больниц от сервиса https://apidata.mos.ru. """
     url = 'https://apidata.mos.ru/v1/datasets/517/rows'
     params = {
