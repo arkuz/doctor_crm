@@ -29,21 +29,19 @@ def create_app():
                                        title=title)
 
             if action == 'reg':
-                if not db_user.registration(email, password):
-                    error_msg = f'Пользователь с ящиком {email} уже существует'
-                else:
+                if db_user.registration(email, password):
                     session['username'] = email
                     return redirect(url_for('moscow_clinic_list'))
+                error_msg = f'Пользователь с почтовым ящиком {email} уже существует'
             else:
                 if db_user.login(email, password):
                     session['username'] = email
                     return redirect(url_for('moscow_clinic_list'))
-                else:
-                    error_msg = f'Неверный логин или пароль'
+                error_msg = 'Неверный логин или пароль'
 
         return render_template('registration.html',
                                error_msg=error_msg,
-                                       title=title)
+                               title=title)
 
     @app.route('/logout')
     def logout():
