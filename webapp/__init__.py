@@ -16,6 +16,7 @@ def create_app():
     @app.route('/', methods=['post', 'get'])
     def index():
         error_msg = ''
+        title = 'Doctor CRM'
         if request.method == 'POST':
             email = request.form.get('email')
             password = request.form.get('password')
@@ -24,7 +25,8 @@ def create_app():
             if not email or not password:
                 error_msg = 'Заполните логин / пароль'
                 return render_template('registration.html',
-                                       error_msg=error_msg)
+                                       error_msg=error_msg,
+                                       title=title)
 
             if action == 'reg':
                 if not db_user.registration(email, password):
@@ -40,7 +42,8 @@ def create_app():
                     error_msg = f'Неверный логин или пароль'
 
         return render_template('registration.html',
-                               error_msg=error_msg)
+                               error_msg=error_msg,
+                                       title=title)
 
     @app.route('/logout')
     def logout():
