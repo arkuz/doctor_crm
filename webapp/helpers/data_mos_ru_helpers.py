@@ -1,13 +1,13 @@
-import os
 import requests
 from typing import Iterator
+from webapp.config import DATA_MOS_RU_API_KEY
 
 
 def fetch_clinics_list() -> Iterator[dict]:
     """ Функция для получения списка больниц от сервиса https://apidata.mos.ru. """
     url = 'https://apidata.mos.ru/v1/datasets/517/rows'
     params = {
-        'api_key': os.environ['DATA_MOS_RU_API_KEY'],
+        'api_key': DATA_MOS_RU_API_KEY,
     }
     try:
         resp = requests.get(url, params=params)

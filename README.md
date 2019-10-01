@@ -21,11 +21,13 @@ pip install -r requirements.txt
 
 #### Запуск
 
-Перед запуском необходимо заполнить переменные окружения с настройками.
-
-- `DATA_MOS_RU_API_KEY` - ключ API сервиса https://apidata.mos.ru
+Перед запуском необходимо заполнить файл с настройками `config.py`, а так же выполнить скрипт создания БД `create_db.py`
 ```bash
-set DATA_MOS_RU_API_KEY=aaaaaaaaaaaaaaaaaaaaaaaa
-python server.py
+python create_db.py
 ```
- - Открыть в браузере адрес http://127.0.0.1:5000/
+
+Запускаем приложение:
+```bash
+set FLASK_APP=webapp && set FLASK_ENV=development && set FLASK_DEBUG=1 && flask run
+```
+Открыть в браузере адрес http://127.0.0.1:5000/
