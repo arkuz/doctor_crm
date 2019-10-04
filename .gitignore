@@ -109,3 +109,6 @@ venv.bak/
 .vscode/
 
 *.db
+
+webapp/config_tmp.py
+
