@@ -105,7 +105,10 @@ venv.bak/
 .mypy_cache/
 
 
-server/config.py
-
 # vscode stuff
 .vscode/
+
+*.db
+
+webapp/config_tmp.py
+
