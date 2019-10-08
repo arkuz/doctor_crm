@@ -1,9 +1,10 @@
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect
 
 import webapp.helpers.data_mos_ru_helpers as dms_helper
 import webapp.parsing.get_information
 import webapp.parsing.get_page
 import webapp.helpers.db.users_helpers as db_user
+from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 
 
 def index():
@@ -22,13 +23,14 @@ def index():
 
         if action == 'reg':
             if db_user.registration(email, password):
+                send_reg_email_to_user(email, password)
                 session['username'] = email
-                return moscow_clinic_list()
+                return redirect('moscow_clinic_list')
             error_msg = f'Пользователь с почтовым ящиком {email} уже существует'
         else:
             if db_user.login(email, password):
                 session['username'] = email
-                return moscow_clinic_list()
+                return redirect('moscow_clinic_list')
             error_msg = 'Неверный логин или пароль'
 
     return render_template('registration.html',
@@ -38,7 +40,7 @@ def index():
 
 def logout():
     session.pop('username', None)
-    return index()
+    return redirect('/')
 
 
 def moscow_clinic_list():
