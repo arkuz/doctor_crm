@@ -4,41 +4,69 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Users(db.Model):
+class Doctor(db.Model):
     __tablename__ = 'doctor'
     doctor_id = db.Column(db.Integer, primary_key=True)
-    doctor_email = db.Column(db.String, nullable=True)
-    doctor_password = db.Column(db.String, nullable=True)
-    doctor_surename = db.Column(db.String, nullable=True)
-    doctor_specialization = db.Column(db.String, nullable=True)
-    doctor_city = db.Column(db.String, nullable=True)
+    email = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    surname = db.Column(db.String, nullable=True)
+    specialization = db.Column(db.String, nullable=True)
+    address = db.Column(db.String, nullable=True)
     is_admin = db.Column(db.Boolean, nullable=True)
-    case = db.relationship('case', backref='doctor')
+    case = db.relationship('Case', backref='doctor')
+
+    def json_dump(self):
+        return {
+            'doctor_id': self.doctor_id,
+            'email': self.email,
+            'surname': self.surname,
+            'specialization': self.specialization,
+            'address': self.address,
+            'is_admin': self.is_admin,
+        }
 
     def __repr__(self):
-        return '<Users {0} {1}>'.format(self.title, self.url)
+        return '<Doctor {0} {1} {2} {3}>'.format(self.surname, self.email, self.specialization, self.is_admin)
 
 
 class Patient(db.Model):
     __tablename__ = 'patient'
     patient_id = db.Column(db.Integer, primary_key=True)
-    patient_surename = db.Column(db.String, nullable=True)
-    patient_birthdate = db.Column(db.DateTime, nullable=True)
-    patient_city = db.Column(db.String, nullable=True)
-    patient_sex = db.Column(db.Boolean, nullable=True)
-    case = db.relationship('case', backref='patient')
+    surname = db.Column(db.String, nullable=True)
+    birthdate = db.Column(db.DateTime, nullable=True)
+    city = db.Column(db.String, nullable=True)
+    sex = db.Column(db.Boolean, nullable=True)
+    case = db.relationship('Case', backref='patient')
+
+    def json_dump(self):
+        return {
+            'patient_id': self.patient_id,
+            'surname': self.surname,
+            'birthdate': self.birthdate,
+            'city': self.city,
+            'sex': self.sex,
+        }
 
     def __repr__(self):
-        return '<Patients {0} {1}>'.format(self.title, self.url)
+        return '<Patient {0}>'.format(self.surname)
 
 
 class Case(db.Model):
     __tablename__ = 'case'
     case_id = db.Column(db.Integer, primary_key=True)
-    case_date = db.Column(db.DateTime, nullable=True)
-    case_diagnosis = db.Column(db.String, nullable=True)
+    date = db.Column(db.DateTime, nullable=True)
+    diagnosis = db.Column(db.String, nullable=True)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.doctor_id'))
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.patient_id'))
 
+    def json_dump(self):
+        return {
+            'case_id': self.case_id,
+            'date': self.date,
+            'diagnosis': self.diagnosis,
+            'doctor_id': self.doctor_id,
+            'patient_id': self.patient_id,
+        }
+
     def __repr__(self):
-        return '<Cases {0} {1}>'.format(self.title, self.url)
+        return '<Case {0} {1} {2} {3}>'.format(self.doctor_id, self.patient_id, self.diagnosis, self.date)
