@@ -15,4 +15,14 @@ def create_app():
     app.add_url_rule('/moscow_clinic_list', 'moscow_clinic_list', page_handlers.moscow_clinic_list)
     app.add_url_rule('/parse_and_show', 'parse_and_show', page_handlers.parse_and_show)
 
+    # endpoints
+    api_prefix = '/api/v1.0'
+    app.add_url_rule(f'{api_prefix}/doctors/',
+                     view_func=endpoint_handlers.get_doctors,
+                     methods=['GET'])
+
+    app.add_url_rule(f'{api_prefix}/doctors/<int:doctor_id>',
+                     view_func=endpoint_handlers.get_doctor_by_id,
+                     methods=['GET'])
+
     return app
