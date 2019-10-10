@@ -1,17 +1,17 @@
 import hashlib
-from webapp.model import db, Users
+from webapp.model import db, Doctor
 from webapp.config import PASSWORD_SALT
 
 
 def is_user_exist(email):
-    return Users.query.filter(Users.email == email).count()
+    return Doctor.query.filter(Doctor.email == email).count()
 
 
 def registration(email, password):
     reg_success = False
     if not is_user_exist(email):
-        user = Users(email=email,
-                     password=get_password_hash(password))
+        user = Doctor(email=email,
+                      password=get_password_hash(password))
         db.session.add(user)
         db.session.commit()
         reg_success = True
@@ -19,7 +19,7 @@ def registration(email, password):
 
 
 def login(email, password):
-    return Users.query.filter(Users.email == email).filter(Users.password == get_password_hash(password)).count()
+    return Doctor.query.filter(Doctor.email == email).filter(Doctor.password == get_password_hash(password)).count()
 
 
 def get_password_hash(password):
