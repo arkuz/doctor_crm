@@ -2,6 +2,7 @@ from flask import Flask
 
 from webapp.model import db
 import webapp.page_handlers as page_handlers
+import webapp.endpoint_handlers as endpoint_handlers
 
 
 def create_app():
