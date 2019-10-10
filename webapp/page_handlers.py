@@ -3,7 +3,7 @@ from flask import render_template, request, session, redirect
 import webapp.helpers.data_mos_ru_helpers as dms_helper
 import webapp.parsing.get_information
 import webapp.parsing.get_page
-import webapp.helpers.db.users_helpers as db_user
+import webapp.helpers.db.doctors_helpers as db_user
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 
 
