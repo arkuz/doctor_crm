@@ -1,50 +1,72 @@
-from flask import render_template, request, session, redirect
+from flask import render_template, request, redirect, url_for
+from flask_login import login_user, current_user, logout_user
 
 import webapp.helpers.data_mos_ru_helpers as dms_helper
 import webapp.parsing.get_information
 import webapp.parsing.get_page
-import webapp.helpers.db.doctors_helpers as db_user
+from webapp.forms import LoginForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
+from webapp.model import db, Doctor
 
 
 def index():
+    if current_user.is_anonymous:
+        return redirect(url_for('login'))
+    else:
+        return render_template('index.html')
+
+
+def login():
+    error_msg = ''
+    login_form = LoginForm()
+    title = 'Авторизация'
+    return render_template('login.html',
+                           title=title,
+                           error_msg=error_msg,
+                           form=login_form)
+
+
+def process_login():
     error_msg = ''
     title = 'Doctor CRM'
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        action = request.form.get('reg-login')
+        reg = request.form.get('reg')
 
         if not email or not password:
             error_msg = 'Заполните логин / пароль'
-            return render_template('registration.html',
-                                   error_msg=error_msg,
-                                   title=title)
+            return redirect(url_for('login'))
 
-        if action == 'reg':
-            if db_user.registration(email, password):
+        if reg:
+            doctor = Doctor.query.filter(Doctor.email == email).first()
+            if not doctor:
+                doctor = Doctor(email=email)
+                doctor.set_password(password)
+                db.session.add(doctor)
+                db.session.commit()
                 send_reg_email_to_user(email, password)
-                session['username'] = email
-                return redirect('moscow_clinic_list')
-            error_msg = f'Пользователь с почтовым ящиком {email} уже существует'
-        else:
-            if db_user.login(email, password):
-                session['username'] = email
-                return redirect('moscow_clinic_list')
-            error_msg = 'Неверный логин или пароль'
+                login_user(doctor)
+                return redirect(url_for('index'))
 
-    return render_template('registration.html',
+        doctor = Doctor.query.filter(Doctor.email == email).first()
+        if doctor and doctor.check_password(password):
+            login_user(doctor)
+            return redirect(url_for('index'))
+        error_msg = 'Неверный логин или пароль'
+
+    return render_template('login.html',
                            error_msg=error_msg,
                            title=title)
 
 
 def logout():
-    session.pop('username', None)
-    return redirect('/')
+    logout_user()
+    return redirect(url_for('login'))
 
 
 def moscow_clinic_list():
-    if 'username' in session:
+    if current_user.is_authenticated:
         title = 'Список больниц Москвы'
         clinics_list = dms_helper.fetch_clinics_list()
         extract_clinics_list = dms_helper.get_result_clinics_list(clinics_list)
@@ -56,7 +78,7 @@ def moscow_clinic_list():
 
 
 def parse_and_show():
-    if 'username' in session:
+    if current_user.is_authenticated:
         url = 'http://neuroreab.ru/centers/'
         title = f'Список больниц с {url}'
         clinics_list = webapp.parsing.get_information.get_data(webapp.parsing.get_page.get_html(url))
