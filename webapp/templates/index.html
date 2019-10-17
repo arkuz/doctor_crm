@@ -28,24 +28,35 @@
 
 
 
+
     </style>
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.3/examples/sign-in/signin.css" rel="stylesheet">
 </head>
+
 <body class="text-center">
 
-<form method="POST" class="form-signin">
-    <h1 class="h3 mb-3 font-weight-normal">{{ title }}</h1>
-    <div>
-        <a href="login">login</a><br>
-        <a href="moscow_clinic_list">moscow_clinic_list</a><br>
-        <a href="parse_and_show">parse_and_show</a><br>
-        <a href="logout">logout</a><br>
-        <br>
-        <a href="/api/v1.0/doctors/">/api/v1.0/doctors/</a><br>
-        <a href="/api/v1.0/doctors/1">/api/v1.0/doctors/1</a><br>
-    </div>
 
-</form>
+<div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-warning" role="alert">
+        {% for message in messages %}
+        {{ message }}<br>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <a href="login">login</a><br>
+    <a href="moscow_clinic_list">moscow_clinic_list</a><br>
+    <a href="parse_and_show">parse_and_show</a><br>
+    <a href="logout">logout</a><br>
+    <br>
+    <a href="/api/v1.0/doctors/">/api/v1.0/doctors/</a><br>
+    <a href="/api/v1.0/doctors/1">/api/v1.0/doctors/1</a><br>
+</div>
+
+
 </body>
 </html>

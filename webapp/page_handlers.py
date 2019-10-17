@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user
 
 import webapp.helpers.data_mos_ru_helpers as dms_helper
@@ -27,37 +27,38 @@ def login():
 
 
 def process_login():
-    error_msg = ''
-    title = 'Doctor CRM'
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
         reg = request.form.get('reg')
 
         if not email or not password:
-            error_msg = 'Заполните логин / пароль'
+            flash('Заполните логин / пароль')
             return redirect(url_for('login'))
 
+        doctor = Doctor.query.filter(Doctor.email == email).first()
         if reg:
-            doctor = Doctor.query.filter(Doctor.email == email).first()
             if not doctor:
-                doctor = Doctor(email=email)
+                doctor = Doctor(email=email, is_admin=0)
                 doctor.set_password(password)
                 db.session.add(doctor)
                 db.session.commit()
                 send_reg_email_to_user(email, password)
                 login_user(doctor)
+                flash('Вы успешно зарегистрировались')
                 return redirect(url_for('index'))
 
-        doctor = Doctor.query.filter(Doctor.email == email).first()
+            flash('Пользователь с таким email уже существует')
+            return redirect(url_for('login'))
+
         if doctor and doctor.check_password(password):
             login_user(doctor)
+            flash('Вы успешно вошли на сайт')
             return redirect(url_for('index'))
-        error_msg = 'Неверный логин или пароль'
 
-    return render_template('login.html',
-                           error_msg=error_msg,
-                           title=title)
+        flash('Неверный логин или пароль')
+
+    return redirect(url_for('login'))
 
 
 def logout():
