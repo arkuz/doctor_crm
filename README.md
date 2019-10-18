@@ -21,12 +21,25 @@ pip install -r requirements.txt
 
 #### Запуск
 
-Перед запуском необходимо заполнить файл с настройками `config.py`, а так же выполнить скрипт создания БД `create_db.py`
+- Перед запуском необходимо заполнить файл с настройками `config.py`.
+- Выполнить скрипт создания БД `create_db.py`
 ```bash
 python create_db.py
 ```
 
-Запускаем приложение:
+- Выполнить скрипт генерации тестовых пользователей `add_test_doctors_to_db.py`. 
+  - Пользователи: `admin@doc.ru`, `doc1@doc.ru`, `doc2@doc.ru`, `doc3@doc.ru`.
+  - Пароль: `123`
+```bash
+python add_test_doctors_to_db.py
+```
+
+ - Если тестовые пользователи не используются, то выполнить скрипт для генерации аккаунта администратора `create_admin.py`.
+ ```bash
+python create_admin.py
+```
+
+- Запускаем приложение:
 ```bash
 set FLASK_APP=webapp && set FLASK_ENV=development && set FLASK_DEBUG=1 && flask run
 ```
