@@ -26,6 +26,7 @@ def create_app():
     app.add_url_rule('/login', 'login', page_handlers.login)
     app.add_url_rule('/process_login', 'process_login', page_handlers.process_login, methods=['GET', 'POST'])
     app.add_url_rule('/logout', 'logout', page_handlers.logout)
+    app.add_url_rule('/admin', 'admin', page_handlers.admin)
     app.add_url_rule('/moscow_clinic_list', 'moscow_clinic_list', page_handlers.moscow_clinic_list)
     app.add_url_rule('/parse_and_show', 'parse_and_show', page_handlers.parse_and_show)
 

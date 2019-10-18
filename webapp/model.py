@@ -17,6 +17,10 @@ class Doctor(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, nullable=True)
     # case = db.relationship('Case', backref='doctor')
 
+    @property
+    def is_administrator(self):
+        return self.is_admin
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 

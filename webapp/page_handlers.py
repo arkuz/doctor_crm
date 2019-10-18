@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 import webapp.helpers.data_mos_ru_helpers as dms_helper
 import webapp.parsing.get_information
@@ -64,6 +64,13 @@ def process_login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@login_required
+def admin():
+    if current_user.is_administrator:
+        return 'Админ привет!'
+    return 'Вы не админ!'
 
 
 def moscow_clinic_list():
