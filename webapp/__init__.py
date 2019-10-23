@@ -11,6 +11,7 @@ from webapp.patient.views import blueprint as patient_blueprint
 from webapp.case.views import blueprint as case_blueprint
 from webapp.admin.views import blueprint as admin_blueprint
 from webapp.clinic.views import blueprint as clinic_blueprint
+from webapp.api.views import blueprint as api_blueprint
 
 
 def create_app():
@@ -32,26 +33,6 @@ def create_app():
     app.register_blueprint(case_blueprint)
     app.register_blueprint(admin_blueprint)
     app.register_blueprint(clinic_blueprint)
-
-    # pages
-    '''
-    app.add_url_rule('/', 'index', page_handlers.index)
-    app.add_url_rule('/login', 'login', page_handlers.login)
-    app.add_url_rule('/process_login', 'process_login', page_handlers.process_login, methods=['GET', 'POST'])
-    app.add_url_rule('/logout', 'logout', page_handlers.logout)
-    app.add_url_rule('/admin', 'admin', page_handlers.admin)
-    app.add_url_rule('/moscow_clinic_list', 'moscow_clinic_list', page_handlers.moscow_clinic_list)
-    app.add_url_rule('/parse_and_show', 'parse_and_show', page_handlers.parse_and_show)
-    '''
-
-    # endpoints
-    api_prefix = '/api/v1.0'
-    app.add_url_rule(f'{api_prefix}/doctors/',
-                     view_func=endpoint_handlers.get_doctors,
-                     methods=['GET'])
-
-    app.add_url_rule(f'{api_prefix}/doctors/<int:doctor_id>',
-                     view_func=endpoint_handlers.get_doctor_by_id,
-                     methods=['GET'])
+    app.register_blueprint(api_blueprint)
 
     return app
