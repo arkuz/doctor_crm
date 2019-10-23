@@ -1,9 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 
-from webapp.model import db
-import webapp.page_handlers as page_handlers
-import webapp.endpoint_handlers as endpoint_handlers
+from webapp.db import db
 from webapp.doctor.models import Doctor
 
 from webapp.doctor.views import blueprint as doctor_blueprint

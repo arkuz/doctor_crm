@@ -1,7 +1,8 @@
 import sys
 
 from webapp import create_app
-from webapp.model import Doctor, db
+from webapp.db import db
+from webapp.doctor.models import Doctor
 
 
 app = create_app()
