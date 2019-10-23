@@ -13,17 +13,15 @@ def index():
     if current_user.is_anonymous:
         return redirect(url_for('doctor.login'))
     else:
-        return render_template('index.html')
+        return render_template('doctor/index.html')
 
 
 @blueprint.route('/login')
 def login():
-    error_msg = ''
     login_form = LoginForm()
     title = 'Авторизация'
-    return render_template('login.html',
+    return render_template('doctor/login.html',
                            title=title,
-                           error_msg=error_msg,
                            form=login_form)
 
 
