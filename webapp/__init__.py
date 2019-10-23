@@ -8,6 +8,7 @@ from webapp.doctor.models import Doctor
 
 from webapp.doctor.views import blueprint as doctor_blueprint
 from webapp.patient.views import blueprint as patient_blueprint
+from webapp.case.views import blueprint as case_blueprint
 
 
 def create_app():
@@ -18,13 +19,14 @@ def create_app():
 
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = 'login'
+    login_manager.login_view = 'doctor.login'
 
     @login_manager.user_loader
     def load_user(doctor_id):
         return db.session.query(Doctor).get(doctor_id)
 
     app.register_blueprint(doctor_blueprint)
+    app.register_blueprint(patient_blueprint)
     app.register_blueprint(patient_blueprint)
 
     # pages
