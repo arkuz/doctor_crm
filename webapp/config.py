@@ -18,3 +18,6 @@ FROM_EMAIL = ''
 
 # секретный ключ для сессии
 SESSION_SECRET_KEY = b''
+
+# сайт для парсинга клиник
+NEUROREAB_URL = 'http://neuroreab.ru/centers/'
