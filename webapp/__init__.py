@@ -7,6 +7,7 @@ import webapp.endpoint_handlers as endpoint_handlers
 from webapp.doctor.models import Doctor
 
 from webapp.doctor.views import blueprint as doctor_blueprint
+from webapp.patient.views import blueprint as patient_blueprint
 
 
 def create_app():
@@ -24,6 +25,7 @@ def create_app():
         return db.session.query(Doctor).get(doctor_id)
 
     app.register_blueprint(doctor_blueprint)
+    app.register_blueprint(patient_blueprint)
 
     # pages
     '''
