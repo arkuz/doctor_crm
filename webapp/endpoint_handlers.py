@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_login import current_user
 
-from webapp.model import Doctor
+from webapp.doctor.models import Doctor
 
 
 def get_doctors():
