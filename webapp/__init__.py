@@ -9,6 +9,7 @@ from webapp.doctor.models import Doctor
 from webapp.doctor.views import blueprint as doctor_blueprint
 from webapp.patient.views import blueprint as patient_blueprint
 from webapp.case.views import blueprint as case_blueprint
+from webapp.admin.views import blueprint as admin_blueprint
 
 
 def create_app():
@@ -28,6 +29,7 @@ def create_app():
     app.register_blueprint(doctor_blueprint)
     app.register_blueprint(patient_blueprint)
     app.register_blueprint(patient_blueprint)
+    app.register_blueprint(admin_blueprint)
 
     # pages
     '''
@@ -35,8 +37,8 @@ def create_app():
     app.add_url_rule('/login', 'login', page_handlers.login)
     app.add_url_rule('/process_login', 'process_login', page_handlers.process_login, methods=['GET', 'POST'])
     app.add_url_rule('/logout', 'logout', page_handlers.logout)
-    '''
     app.add_url_rule('/admin', 'admin', page_handlers.admin)
+    '''
     app.add_url_rule('/moscow_clinic_list', 'moscow_clinic_list', page_handlers.moscow_clinic_list)
     app.add_url_rule('/parse_and_show', 'parse_and_show', page_handlers.parse_and_show)
 

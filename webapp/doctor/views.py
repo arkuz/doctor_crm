@@ -1,11 +1,13 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user
-from flask import Blueprint
-blueprint = Blueprint('doctor', __name__)
 
 from webapp.doctor.forms import LoginForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 from webapp.doctor.models import db, Doctor
+from flask import Blueprint
+
+
+blueprint = Blueprint('doctor', __name__)
 
 
 @blueprint.route('/')
