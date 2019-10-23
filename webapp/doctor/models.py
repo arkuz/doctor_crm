@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from webapp.db import db
 
+
 class Doctor(db.Model, UserMixin):
     __tablename__ = 'doctor'
     id = db.Column(db.Integer, primary_key=True) # noqa
