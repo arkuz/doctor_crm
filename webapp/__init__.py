@@ -3,6 +3,8 @@ from flask_login import LoginManager
 
 from webapp.db import db
 from webapp.doctor.models import Doctor
+from webapp.patient.models import Patient
+from webapp.case.models import Case
 
 from webapp.doctor.views import blueprint as doctor_blueprint
 from webapp.patient.views import blueprint as patient_blueprint
