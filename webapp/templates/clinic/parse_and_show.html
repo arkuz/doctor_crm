@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <h2>{{ title }}</h2>
+    </div>
+    <div class="row justify-content-center">
+        {% if clinics_list %}
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Город</th>
+                <th scope="col">Название</th>
+                <th scope="col">Адрес</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for clinic in clinics_list %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ clinic.city }}</td>
+                <td>{{ clinic.name }}</td>
+                <td>{{ clinic.adress }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        Извините, ошибка получения данных с сайта&nbsp;<a href="https://apidata.mos.ru">apidata.mos.ru</a>
+        {% endif%}
+    </div>
+
+{% endblock %}
