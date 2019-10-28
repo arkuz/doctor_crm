@@ -17,12 +17,14 @@ class DoctorsListView(MethodView):
         return 'Ошибка, вы не авторизованы!'
 
 
-@blueprint.route('/doctors/<int:doctor_id>', methods=['GET'])
-def get_doctor_by_id(doctor_id):
-    if current_user.is_authenticated:
-        doctor = [doc.json_dump() for doc in Doctor.query.filter(Doctor.id == doctor_id)]
-        return jsonify({'doctors': doctor})
-    return 'Ошибка, вы не авторизованы!'
+class DoctorListView(MethodView):
+    def get(self, doctor_id):
+        if current_user.is_authenticated:
+            doctor = [doc.json_dump() for doc in Doctor.query.filter(Doctor.id == doctor_id)]
+            return jsonify({'doctors': doctor})
+        return 'Ошибка, вы не авторизованы!'
 
 
 blueprint.add_url_rule('/doctors', view_func=DoctorsListView.as_view('list_doctors'))
+blueprint.add_url_rule('/doctors/<int:doctor_id>', view_func=DoctorListView.as_view('list_doctor'))
+
