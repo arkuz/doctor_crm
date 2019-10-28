@@ -27,4 +27,3 @@ class DoctorListView(MethodView):
 
 blueprint.add_url_rule('/doctors', view_func=DoctorsListView.as_view('list_doctors'))
 blueprint.add_url_rule('/doctors/<int:doctor_id>', view_func=DoctorListView.as_view('list_doctor'))
-
