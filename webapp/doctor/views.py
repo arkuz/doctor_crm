@@ -5,31 +5,31 @@ from webapp.doctor.forms import LoginForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 from webapp.doctor.models import db, Doctor
 from flask import Blueprint
+from flask.views import MethodView
 
 
 blueprint = Blueprint('doctor', __name__)
 
 
-@blueprint.route('/')
-def index():
-    if current_user.is_anonymous:
-        return redirect(url_for('doctor.login'))
-    else:
-        return render_template('doctor/index.html')
+class DoctorIndexView(MethodView):
+    def get(self):
+        if current_user.is_anonymous:
+            return redirect(url_for('doctor.login'))
+        else:
+            return render_template('doctor/index.html')
 
 
-@blueprint.route('/login')
-def login():
-    login_form = LoginForm()
-    title = 'Авторизация'
-    return render_template('doctor/login.html',
-                           title=title,
-                           form=login_form)
+class DoctorLoginView(MethodView):
+    def get(self):
+        login_form = LoginForm()
+        title = 'Авторизация'
+        return render_template('doctor/login.html',
+                               title=title,
+                               form=login_form)
 
 
-@blueprint.route('/process-login', methods=['GET', 'POST'])
-def process_login():
-    if request.method == 'POST':
+class DoctorsLoginProcessView(MethodView):
+    def post(self):
         email = request.form.get('email')
         password = request.form.get('password')
         reg = request.form.get('reg')
@@ -60,10 +60,16 @@ def process_login():
 
         flash('Неверный логин или пароль')
 
-    return redirect(url_for('doctor.login'))
+        return redirect(url_for('doctor.login'))
 
 
-@blueprint.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('doctor.login'))
+class DoctorLogoutView(MethodView):
+    def get(self):
+        logout_user()
+        return redirect(url_for('doctor.login'))
+
+
+blueprint.add_url_rule('/', view_func=DoctorIndexView.as_view('index'))
+blueprint.add_url_rule('/login', view_func=DoctorLoginView.as_view('login'))
+blueprint.add_url_rule('/process_login', view_func=DoctorsLoginProcessView.as_view('process_login'))
+blueprint.add_url_rule('/logout', view_func=DoctorLogoutView.as_view('logout'))
