@@ -12,6 +12,7 @@ from webapp.patient.views import blueprint as patient_blueprint
 from webapp.case.views import blueprint as case_blueprint
 from webapp.clinic.views import blueprint as clinic_blueprint
 from webapp.api.views import blueprint as api_blueprint
+from webapp.common.views import blueprint as common_blueprint
 
 
 def create_app():
@@ -35,5 +36,6 @@ def create_app():
     app.register_blueprint(case_blueprint)
     app.register_blueprint(clinic_blueprint)
     app.register_blueprint(api_blueprint)
+    app.register_blueprint(common_blueprint)
 
     return app

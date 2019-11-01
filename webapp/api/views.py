@@ -1,28 +1,23 @@
 from flask import jsonify, Blueprint
-from flask.views import MethodView
-from flask_login import current_user
 
 
 from webapp.doctor.models import Doctor
+from webapp.common.views import AuthRequiredMethodView
 
 
 blueprint = Blueprint('api', __name__, url_prefix='/api/v1.0')
 
 
-class DoctorsListView(MethodView):
+class DoctorsListView(AuthRequiredMethodView):
     def get(self):
-        if current_user.is_authenticated:
-            doctors_list = [doc.json_dump() for doc in Doctor.query.all()]
-            return jsonify({'doctors': doctors_list})
-        return 'Ошибка, вы не авторизованы!'
+        doctors_list = [doc.json_dump() for doc in Doctor.query.all()]
+        return jsonify({'doctors': doctors_list})
 
 
-class DoctorListView(MethodView):
+class DoctorListView(AuthRequiredMethodView):
     def get(self, doctor_id):
-        if current_user.is_authenticated:
-            doctor = [doc.json_dump() for doc in Doctor.query.filter(Doctor.id == doctor_id)]
-            return jsonify({'doctors': doctor})
-        return 'Ошибка, вы не авторизованы!'
+        doctor = [doc.json_dump() for doc in Doctor.query.filter(Doctor.id == doctor_id)]
+        return jsonify({'doctors': doctor})
 
 
 blueprint.add_url_rule('/doctors', view_func=DoctorsListView.as_view('list_doctors'))

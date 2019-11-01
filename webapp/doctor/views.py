@@ -1,11 +1,12 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, logout_user
 
 from webapp.doctor.forms import LoginForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 from webapp.doctor.models import db, Doctor
 from flask import Blueprint
 from flask.views import MethodView
+from webapp.common.views import AuthRequiredMethodView
 
 
 blueprint = Blueprint('doctor', __name__)
@@ -13,10 +14,7 @@ blueprint = Blueprint('doctor', __name__)
 
 class DoctorIndexView(MethodView):
     def get(self):
-        if current_user.is_anonymous:
-            return redirect(url_for('doctor.login'))
-        else:
-            return render_template('doctor/index.html')
+        return render_template('doctor/index.html')
 
 
 class DoctorLoginView(MethodView):
@@ -63,7 +61,7 @@ class DoctorsLoginProcessView(MethodView):
         return redirect(url_for('doctor.login'))
 
 
-class DoctorLogoutView(MethodView):
+class DoctorLogoutView(AuthRequiredMethodView):
     def get(self):
         logout_user()
         return redirect(url_for('doctor.login'))
