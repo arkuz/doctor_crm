@@ -12,11 +12,15 @@ class Doctor(db.Model, UserMixin):
     surname = db.Column(db.String, nullable=True)
     specialization = db.Column(db.String, nullable=True)
     address = db.Column(db.String, nullable=True)
-    is_admin = db.Column(db.Boolean, nullable=True)
+    role = db.Column(db.String, nullable=True)
 
     @property
-    def is_administrator(self):
-        return self.is_admin
+    def is_admin(self):
+        return self.role == 'admin'
+
+    @property
+    def is_registrator(self):
+        return self.role == 'registrator'
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -31,8 +35,8 @@ class Doctor(db.Model, UserMixin):
             'surname': self.surname,
             'specialization': self.specialization,
             'address': self.address,
-            'is_admin': self.is_admin,
+            'role': self.role,
         }
 
     def __repr__(self):
-        return '<Doctor {0} {1} {2} {3}>'.format(self.surname, self.email, self.specialization, self.is_admin)
+        return '<Doctor {0} {1} {2} {3}>'.format(self.surname, self.email, self.specialization, self.role)

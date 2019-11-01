@@ -8,6 +8,6 @@ blueprint = Blueprint('admin', __name__, url_prefix='/admin')
 @blueprint.route('/')
 @login_required
 def admin_index():
-    if current_user.is_administrator:
+    if current_user.is_admin:
         return 'Админ привет!'
     return 'Вы не админ!'

@@ -14,7 +14,15 @@ doctors = [
         'surname': 'Админов Админ Админович',
         'specialization': 'Админ',
         'address': 'село Админское',
-        'is_admin': 1,
+        'role': 'admin',
+    },
+    {
+        'email': 'reg@doc.ru',
+        'password': '123',
+        'surname': 'Регистраторов Регистратор Регистраторович',
+        'specialization': 'Регистраторов',
+        'address': 'село Регистраторское',
+        'role': 'registrator',
     },
     {
         'email': 'doc1@doc.ru',
@@ -22,7 +30,7 @@ doctors = [
         'surname': 'Борисов Петр Михайлович',
         'specialization': 'Хирург',
         'address': 'Москва, Кутузовский проспект 223',
-        'is_admin': 0,
+        'role': 'doc',
     },
     {
         'email': 'doc2@doc.ru',
@@ -30,7 +38,7 @@ doctors = [
         'surname': 'Иванов Сергей Петрович',
         'specialization': 'Терапевт',
         'address': 'Москва, ул. Ленина 22',
-        'is_admin': 0,
+        'role': 'doc',
     },
     {
         'email': 'doc3@doc.ru',
@@ -38,7 +46,7 @@ doctors = [
         'surname': 'Новикова Элла Дмитриевна',
         'specialization': 'Невролог',
         'address': 'Москва, ул. Ульянова 13/6',
-        'is_admin': 0,
+        'role': 'doc',
     },
 ]
 
@@ -54,7 +62,7 @@ with app.app_context():
             surname=doctor['surname'],
             specialization=doctor['specialization'],
             address=doctor['address'],
-            is_admin=doctor['is_admin'],
+            role=doctor['role'],
         )
         new_Doctor.set_password(doctor['password'])
         db.session.add(new_Doctor)
