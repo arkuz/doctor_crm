@@ -6,10 +6,14 @@ class Case(db.Model):
     id = db.Column(db.Integer, primary_key=True) # noqa
     date = db.Column(db.DateTime, nullable=True)
     diagnosis = db.Column(db.String, nullable=True)
-    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'))
-    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
-    doctor = db.relationship('Doctor')
-    patient = db.relationship('Patient')
+    doctor_id = db.Column(db.Integer,
+                          db.ForeignKey('doctor.id', ondelete='CASCADE'),
+                          index=True)
+    patient_id = db.Column(db.Integer,
+                           db.ForeignKey('patient.id', ondelete='CASCADE'),
+                          index=True)
+    doctor = db.relationship('Doctor', backref='case')
+    patient = db.relationship('Patient', backref='case')
 
     def json_dump(self):
         return {
