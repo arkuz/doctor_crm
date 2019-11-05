@@ -78,6 +78,7 @@ class DoctorTimingView(AuthRequiredMethodView):
                                title=title,
                                timing=timing)
 
+
 class DoctorCasesView(AuthRequiredMethodView):
     def get(self):
         title = 'Записи к врачу'

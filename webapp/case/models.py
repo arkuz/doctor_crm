@@ -1,6 +1,6 @@
 from webapp.db import db
 import datetime
-from webapp.db import db
+
 
 class Case(db.Model):
     __tablename__ = 'case'
