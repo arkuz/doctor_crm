@@ -22,6 +22,10 @@ class Doctor(db.Model, UserMixin):
     def is_registrator(self):
         return self.role == 'registrator'
 
+    @property
+    def is_doctor(self):
+        return self.role == 'doc'
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
