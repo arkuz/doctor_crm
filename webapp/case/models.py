@@ -1,10 +1,11 @@
 from webapp.db import db
-
+import datetime
+from webapp.db import db
 
 class Case(db.Model):
     __tablename__ = 'case'
     id = db.Column(db.Integer, primary_key=True) # noqa
-    date = db.Column(db.DateTime, nullable=True)
+    date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.now())
     diagnosis = db.Column(db.String, nullable=True)
     doctor_id = db.Column(db.Integer,
                           db.ForeignKey('doctor.id', ondelete='CASCADE'),

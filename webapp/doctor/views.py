@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user, current_user
 from webapp.doctor.forms import LoginForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 from webapp.doctor.models import db, Doctor, Timing
+from webapp.case.models import Case
 from flask import Blueprint
 from flask.views import MethodView
 from webapp.common.views import AuthRequiredMethodView
@@ -77,6 +78,16 @@ class DoctorTimingView(AuthRequiredMethodView):
                                title=title,
                                timing=timing)
 
+class DoctorCasesView(AuthRequiredMethodView):
+    def get(self):
+        title = 'Записи к врачу'
+        cases = None
+        if current_user.is_doctor:
+            cases = Case.query.all()
+        return render_template('doctor/cases.html',
+                               title=title,
+                               cases=cases)
+
 
 blueprint.add_url_rule('/', view_func=DoctorIndexView.as_view('index'))
 blueprint.add_url_rule('/login', view_func=DoctorLoginView.as_view('login'))
@@ -84,3 +95,4 @@ blueprint.add_url_rule('/process_login', view_func=DoctorsLoginProcessView.as_vi
 blueprint.add_url_rule('/logout', view_func=DoctorLogoutView.as_view('logout'))
 
 blueprint.add_url_rule('/timing', view_func=DoctorTimingView.as_view('timing'))
+blueprint.add_url_rule('/cases', view_func=DoctorCasesView.as_view('cases'))
