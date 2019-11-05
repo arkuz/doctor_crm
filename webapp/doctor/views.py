@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 from webapp.doctor.forms import LoginForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
-from webapp.doctor.models import db, Doctor
+from webapp.doctor.models import db, Doctor, Timing
 from flask import Blueprint
 from flask.views import MethodView
 from webapp.common.views import AuthRequiredMethodView
@@ -67,7 +67,20 @@ class DoctorLogoutView(AuthRequiredMethodView):
         return redirect(url_for('doctor.login'))
 
 
+class DoctorTimingView(AuthRequiredMethodView):
+    def get(self):
+        title = 'Личный кабинет'
+        timing = None
+        if current_user.is_doctor:
+            timing = Timing.query.filter(Timing.doctor_id == current_user.id)
+        return render_template('doctor/timing.html',
+                               title=title,
+                               timing=timing)
+
+
 blueprint.add_url_rule('/', view_func=DoctorIndexView.as_view('index'))
 blueprint.add_url_rule('/login', view_func=DoctorLoginView.as_view('login'))
 blueprint.add_url_rule('/process_login', view_func=DoctorsLoginProcessView.as_view('process_login'))
 blueprint.add_url_rule('/logout', view_func=DoctorLogoutView.as_view('logout'))
+
+blueprint.add_url_rule('/timing', view_func=DoctorTimingView.as_view('timing'))

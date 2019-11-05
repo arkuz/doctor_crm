@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <h2>{{ title }}</h2>
+    </div>
+
+    <div class="row justify-content-center">
+        {% if timing %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('doctor.timing') }}">Расписание на сегодня</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('doctor.timing') }}">Добавить расписание</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Доктор</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Часы c</th>
+                <th scope="col">Минуты с</th>
+                <th scope="col">Часы по</th>
+                <th scope="col">Минуты по</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for elem in timing %}
+            <tr>
+                <td>{{ elem.doctor.surname }}</td>
+                <td>{{ elem.day }}</td>
+                <td>{{ elem.hours_with }}</td>
+                <td>{{ elem.minutes_with }}</td>
+                <td>{{ elem.hours_to }}</td>
+                <td>{{ elem.minutes_to }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            Личный кабинет доступен только для роли "Доктор"
+        {% endif%}
+    </div>
+
+{% endblock %}

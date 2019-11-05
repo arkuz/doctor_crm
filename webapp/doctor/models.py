@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 
 from webapp.db import db
 
@@ -44,3 +45,20 @@ class Doctor(db.Model, UserMixin):
 
     def __repr__(self):
         return '<Doctor {0} {1} {2} {3}>'.format(self.surname, self.email, self.specialization, self.role)
+
+
+class Timing(db.Model):
+    __tablename__ = 'timing'
+    id = db.Column(db.Integer, primary_key=True) # noqa
+    doctor_id = db.Column(db.Integer,
+                          db.ForeignKey('doctor.id', ondelete='CASCADE'),
+                          index=True)
+    day = db.Column(db.DateTime, nullable=True, default=datetime.datetime.now())
+    hours_with = db.Column(db.Integer, nullable=True, default=9)
+    minutes_with = db.Column(db.Integer, nullable=True, default=0)
+    hours_to = db.Column(db.Integer, nullable=True, default=18)
+    minutes_to = db.Column(db.Integer, nullable=True, default=0)
+    doctor = db.relationship('Doctor', backref='timing')
+
+    def __repr__(self):
+        return '<Timing {0} {1} {2} {3}>'.format(self.doctor_id, self.day, self.hours, self.minutes)
