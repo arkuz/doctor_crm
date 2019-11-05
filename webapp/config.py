@@ -5,19 +5,19 @@ basedir = os.path.abspath(os.path.dirname('__file__'))
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'webapp.db')
 
 # ключ API сервиса https://apidata.mos.ru
-DATA_MOS_RU_API_KEY = '40efbeeb79728efe0bc580f6174da03d'
+DATA_MOS_RU_API_KEY = ''
 
 # соль для паролей пользователей
-PASSWORD_SALT = 'c8b4df885065976921d20716e4a1a36bb580d0e47076cfab9d421d51f32ee3dc'
+PASSWORD_SALT = ''
 
 # ключ API для сервиса email рассылок https://sendgrid.com
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = ''
 
 # email от лица которого будут отправляться письма пользователям
-FROM_EMAIL = 'doctorcrmtest@gmail.com'
+FROM_EMAIL = ''
 
 # секретный ключ для сессии
-SESSION_SECRET_KEY = b'()*&%&087gho9h)'
+SESSION_SECRET_KEY = b''
 
 # сайт для парсинга клиник
-NEUROREAB_URL = 'http://neuroreab.ru/centers/'
+NEUROREAB_URL = ''
