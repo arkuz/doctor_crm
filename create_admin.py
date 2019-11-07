@@ -21,7 +21,7 @@ with app.app_context():
         print('Пароли не совпадают') # noqa
         sys.exit(0)
 
-    new_Doctor = Doctor(email=email, role='admin')
+    new_Doctor = Doctor(email=email, role='admin', active=1)
     new_Doctor.set_password(password)
 
     db.session.add(new_Doctor)

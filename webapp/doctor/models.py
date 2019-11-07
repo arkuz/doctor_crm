@@ -14,6 +14,11 @@ class Doctor(db.Model, UserMixin):
     specialization = db.Column(db.String, nullable=True)
     address = db.Column(db.String, nullable=True)
     role = db.Column(db.String, nullable=True)
+    active = db.Column(db.Boolean, nullable=False)
+
+    @property
+    def is_active(self):
+        return self.active
 
     @property
     def is_admin(self):
@@ -61,4 +66,4 @@ class Timing(db.Model):
     doctor = db.relationship('Doctor', backref='timing')
 
     def __repr__(self):
-        return '<Timing {0} {1} {2} {3}>'.format(self.doctor_id, self.day, self.hours, self.minutes)
+        return '<Timing {0} {1}>'.format(self.doctor_id, self.day)

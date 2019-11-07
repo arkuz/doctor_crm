@@ -51,7 +51,7 @@ class DoctorsLoginProcessView(MethodView):
         doctor = Doctor.query.filter(Doctor.email == email).first()
         if reg:
             if not doctor:
-                doctor = Doctor(email=email, role='doc')
+                doctor = Doctor(email=email, role='doc', active=0)
                 doctor.set_password(password)
                 db.session.add(doctor)
                 db.session.commit()

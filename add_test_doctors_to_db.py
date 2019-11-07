@@ -15,6 +15,7 @@ doctors = [
         'specialization': 'Админ',
         'address': 'село Админское',
         'role': 'admin',
+        'active': 1,
     },
     {
         'email': 'reg@doc.ru',
@@ -23,6 +24,7 @@ doctors = [
         'specialization': 'Регистраторов',
         'address': 'село Регистраторское',
         'role': 'registrator',
+        'active': 1,
     },
     {
         'email': 'doc1@doc.ru',
@@ -31,6 +33,7 @@ doctors = [
         'specialization': 'Хирург',
         'address': 'Москва, Кутузовский проспект 223',
         'role': 'doc',
+        'active': 1,
     },
     {
         'email': 'doc2@doc.ru',
@@ -39,6 +42,7 @@ doctors = [
         'specialization': 'Терапевт',
         'address': 'Москва, ул. Ленина 22',
         'role': 'doc',
+        'active': 1,
     },
     {
         'email': 'doc3@doc.ru',
@@ -47,6 +51,7 @@ doctors = [
         'specialization': 'Невролог',
         'address': 'Москва, ул. Ульянова 13/6',
         'role': 'doc',
+        'active': 1,
     },
 ]
 
@@ -63,6 +68,7 @@ with app.app_context():
             specialization=doctor['specialization'],
             address=doctor['address'],
             role=doctor['role'],
+            active=doctor['active']
         )
         new_Doctor.set_password(doctor['password'])
         db.session.add(new_Doctor)
