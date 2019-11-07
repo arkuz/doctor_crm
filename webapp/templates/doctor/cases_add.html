@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <h2>{{ title }}</h2>
+    </div>
+
+    <form action="#" method="POST" class="form-signin">
+    <div class="form-group">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.date.label }}<br>
+            {{ form.date() }}
+        </p>
+        <p>
+            {{ form.diagnosis.label }}<br>
+            {{ form.diagnosis() }}
+        </p>
+        <p>
+            {{ form.add() }}
+        </p>
+    </div>
+</form>
+
+{% endblock %}
+

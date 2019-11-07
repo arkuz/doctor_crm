@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user
 
-from webapp.doctor.forms import LoginForm, TimingAddForm
+from webapp.doctor.forms import LoginForm, TimingAddForm, CasesAddForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 from webapp.doctor.models import db, Doctor, Timing
 from webapp.case.models import Case
@@ -130,6 +130,25 @@ class DoctorCasesView(AuthRequiredMethodView):
                                cases=cases)
 
 
+class DoctorCaseAdd(AuthRequiredMethodView):
+    def get(self):
+        title = 'Добавить запись'
+        cases_add_form = CasesAddForm()
+        return render_template('doctor/cases_add.html',
+                               title=title,
+                               form=cases_add_form)
+
+    def post(self):
+        date = datetime.strptime(request.form.get('date'), '%d.%m.%Y')
+        diagnosis = request.form.get('diagnosis')
+        new_case = Case(date=date, diagnosis=diagnosis)
+        db.session.add(new_case)
+        db.session.commit()
+        flash('Вы успешно зарегистрировались')
+
+        return redirect(url_for('doctor.cases'))
+
+
 blueprint.add_url_rule('/', view_func=DoctorIndexView.as_view('index'))
 blueprint.add_url_rule('/login', view_func=DoctorLoginView.as_view('login'))
 blueprint.add_url_rule('/process_login', view_func=DoctorsLoginProcessView.as_view('process_login'))
@@ -138,3 +157,4 @@ blueprint.add_url_rule('/logout', view_func=DoctorLogoutView.as_view('logout'))
 blueprint.add_url_rule('/timing', view_func=DoctorTimingView.as_view('timing'))
 blueprint.add_url_rule('/timing_add', view_func=DoctorTimingAdd.as_view('timing_add'))
 blueprint.add_url_rule('/cases', view_func=DoctorCasesView.as_view('cases'))
+blueprint.add_url_rule('/cases_add', view_func=DoctorCaseAdd.as_view('cases_add'))

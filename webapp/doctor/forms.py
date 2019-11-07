@@ -65,3 +65,24 @@ class TimingAddForm(FlaskForm):
                       render_kw={
                           'class': 'btn btn-primary',
                       })
+
+
+class CasesAddForm(FlaskForm):
+    date = DateField('Дата',
+                    validators=[DataRequired()],
+                    render_kw={
+                        'class': 'form-control',
+                        'autofocus': True,
+                        'placeholder': 'mm.dd.yyyy',
+                    })
+
+    diagnosis = StringField('Диагноз',
+                            validators=[DataRequired()],
+                            render_kw={
+                                'class': 'form-control',
+                            })
+
+    add = SubmitField('Добавить',
+                      render_kw={
+                          'class': 'btn btn-primary',
+                      })
