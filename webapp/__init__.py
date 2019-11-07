@@ -6,6 +6,7 @@ from webapp.db import db
 from webapp.doctor.models import Doctor
 from webapp.patient.models import Patient
 from webapp.case.models import Case
+from webapp.doctor.models import Timing
 
 from webapp.doctor.views import blueprint as doctor_blueprint
 from webapp.patient.views import blueprint as patient_blueprint
@@ -22,6 +23,9 @@ def create_app():
     db.init_app(app)
     admin = Admin(app)
     admin.add_view(ModelView(Doctor, db.session, endpoint='doctor_db'))
+    admin.add_view(ModelView(Case, db.session, endpoint='case_db'))
+    admin.add_view(ModelView(Timing, db.session, endpoint='timing_db'))
+    admin.add_view(ModelView(Patient, db.session, endpoint='patient_db'))
 
     login_manager = LoginManager()
     login_manager.init_app(app)
