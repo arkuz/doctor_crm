@@ -68,7 +68,7 @@ with app.app_context():
             specialization=doctor['specialization'],
             address=doctor['address'],
             role=doctor['role'],
-            active=doctor['active']
+            active=doctor['active'],
         )
         new_Doctor.set_password(doctor['password'])
         db.session.add(new_Doctor)
