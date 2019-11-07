@@ -2,17 +2,14 @@
 
 {% block content %}
 
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="alert alert-warning" role="alert">
-        {% for message in messages %}
-        {{ message }}<br>
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% endwith %}
 
-    <h1>Контент</h1>
+
+    <!--
+    {% if not current_user.is_authenticated %}
+        <h1>Здравствуйте!</h1>
+        <div>Для продолжения работы необходимо <a href="login">авторизоваться</a>.</div>
+    {% endif %}
+
 
     <a href="login">login</a><br>
     <a href="moscow_clinic_list">moscow_clinic_list</a><br>
@@ -24,5 +21,6 @@
     <br>
     <a href="/api/v1.0/doctors">/api/v1.0/doctors/</a><br>
     <a href="/api/v1.0/doctors/1">/api/v1.0/doctors/1</a><br>
+    -->
 
 {% endblock %}

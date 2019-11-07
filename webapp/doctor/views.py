@@ -15,6 +15,15 @@ blueprint = Blueprint('doctor', __name__)
 
 class DoctorIndexView(MethodView):
     def get(self):
+        if current_user.is_anonymous:
+            return redirect(url_for('doctor.login'))
+
+        if current_user.is_doctor:
+            return redirect(url_for('doctor.timing'))
+
+        if current_user.is_registrator:
+            return redirect(url_for('doctor.cases'))
+
         return render_template('doctor/index.html')
 
 
@@ -40,7 +49,7 @@ class DoctorsLoginProcessView(MethodView):
         doctor = Doctor.query.filter(Doctor.email == email).first()
         if reg:
             if not doctor:
-                doctor = Doctor(email=email, is_admin=0)
+                doctor = Doctor(email=email, role='doc')
                 doctor.set_password(password)
                 db.session.add(doctor)
                 db.session.commit()
@@ -83,7 +92,7 @@ class DoctorCasesView(AuthRequiredMethodView):
     def get(self):
         title = 'Записи к врачу'
         cases = None
-        if current_user.is_doctor:
+        if current_user.is_registrator:
             cases = Case.query.all()
         return render_template('doctor/cases.html',
                                title=title,
