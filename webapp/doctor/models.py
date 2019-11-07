@@ -53,7 +53,7 @@ class Timing(db.Model):
     doctor_id = db.Column(db.Integer,
                           db.ForeignKey('doctor.id', ondelete='CASCADE'),
                           index=True)
-    day = db.Column(db.DateTime, nullable=True, default=datetime.datetime.now())
+    day = db.Column(db.DateTime, nullable=True, default=datetime.date.today())
     hours_with = db.Column(db.Integer, nullable=True, default=9)
     minutes_with = db.Column(db.Integer, nullable=True, default=0)
     hours_to = db.Column(db.Integer, nullable=True, default=18)

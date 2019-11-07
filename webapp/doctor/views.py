@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user
 
-from webapp.doctor.forms import LoginForm
+from webapp.doctor.forms import LoginForm, TimingAddForm
 from webapp.helpers.sendgrid_helpers import send_reg_email_to_user
 from webapp.doctor.models import db, Doctor, Timing
 from webapp.case.models import Case
@@ -88,6 +90,35 @@ class DoctorTimingView(AuthRequiredMethodView):
                                timing=timing)
 
 
+class DoctorTimingAdd(AuthRequiredMethodView):
+    def get(self):
+        title = 'Добавить запись'
+        timing_add_form = TimingAddForm()
+        return render_template('doctor/timing_add.html',
+                               title=title,
+                               form=timing_add_form)
+
+    def post(self):
+        doctor_id = current_user.id
+        day = datetime.strptime(request.form.get('day'), '%d.%m.%Y')
+        hours_with = request.form.get('hours_with')
+        minutes_with = request.form.get('minutes_with')
+        hours_to = request.form.get('hours_to')
+        minutes_to = request.form.get('minutes_to')
+        timing = Timing(doctor_id=doctor_id,
+                        day=day,
+                        hours_with=hours_with,
+                        minutes_with=minutes_with,
+                        hours_to=hours_to,
+                        minutes_to=minutes_to,
+                        )
+        db.session.add(timing)
+        db.session.commit()
+        flash('Вы успешно зарегистрировались')
+
+        return redirect(url_for('doctor.timing'))
+
+
 class DoctorCasesView(AuthRequiredMethodView):
     def get(self):
         title = 'Записи к врачу'
@@ -105,4 +136,5 @@ blueprint.add_url_rule('/process_login', view_func=DoctorsLoginProcessView.as_vi
 blueprint.add_url_rule('/logout', view_func=DoctorLogoutView.as_view('logout'))
 
 blueprint.add_url_rule('/timing', view_func=DoctorTimingView.as_view('timing'))
+blueprint.add_url_rule('/timing_add', view_func=DoctorTimingAdd.as_view('timing_add'))
 blueprint.add_url_rule('/cases', view_func=DoctorCasesView.as_view('cases'))

@@ -25,7 +25,7 @@
             {% for elem in timing %}
             <tr>
                 <td>{{ elem.doctor.surname }}</td>
-                <td>{{ elem.day }}</td>
+                <td>{{ elem.day.strftime("%d.%m.%Y") }}</td>
                 <td>{{ elem.hours_with }}</td>
                 <td>{{ elem.minutes_with }}</td>
                 <td>{{ elem.hours_to }}</td>

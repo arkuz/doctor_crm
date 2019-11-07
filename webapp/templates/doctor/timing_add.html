@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <h2>{{ title }}</h2>
+    </div>
+
+    <form action="#" method="POST" class="form-signin">
+    <div class="form-group">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.day.label }}<br>
+            {{ form.day() }}
+        </p>
+        <p>
+            {{ form.hours_with.label }}<br>
+            {{ form.hours_with() }}
+        </p>
+        <p>
+            {{ form.minutes_with.label }}<br>
+            {{ form.minutes_with() }}
+        </p>
+        <p>
+            {{ form.hours_to.label }}<br>
+            {{ form.hours_to() }}
+        </p>
+        <p>
+            {{ form.minutes_to.label }}<br>
+            {{ form.minutes_to() }}
+        </p>
+        <p>
+            {{ form.add() }}
+        </p>
+    </div>
+</form>
+
+{% endblock %}
+
