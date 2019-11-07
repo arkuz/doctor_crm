@@ -73,13 +73,13 @@ class CasesAddForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={
             'class': 'form-control',
+            'autofocus': True,
         })
     date = DateField(
         'Дата',
         validators=[DataRequired()],
         render_kw={
             'class': 'form-control',
-            'autofocus': True,
             'placeholder': 'mm.dd.yyyy',
         })
 
