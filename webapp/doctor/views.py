@@ -134,15 +134,21 @@ class DoctorCaseAdd(AuthRequiredMethodView):
     def get(self):
         title = 'Добавить запись'
         cases_add_form = CasesAddForm()
+        doctors = Doctor.query.filter(Doctor.role == 'doc')
         return render_template('doctor/cases_add.html',
                                title=title,
-                               form=cases_add_form)
+                               form=cases_add_form,
+                               doctors=doctors)
 
     def post(self):
         date = datetime.strptime(request.form.get('date'), '%d.%m.%Y')
         diagnosis = request.form.get('diagnosis')
         patient_surename = request.form.get('patient_surename')
-        new_case = Case(date=date, diagnosis=diagnosis, patient_surename=patient_surename)
+        doctor_id = request.form.get('doc')
+        new_case = Case(date=date,
+                        diagnosis=diagnosis,
+                        patient_surename=patient_surename,
+                        doctor_id=doctor_id)
         db.session.add(new_case)
         db.session.commit()
         flash('Вы успешно зарегистрировались')

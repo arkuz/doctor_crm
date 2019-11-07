@@ -9,6 +9,16 @@
     <form action="#" method="POST" class="form-signin">
     <div class="form-group">
         {{ form.hidden_tag() }}
+
+        <p>
+            <label>Доктор</label><br>
+            <select class="form-control" name="doc" id="doc" autofocus>
+                {% for elem in doctors %}
+                    <option value="{{ elem.id }}">{{ elem.surname }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
         <p>
             {{ form.patient_surename.label }}<br>
             {{ form.patient_surename() }}
