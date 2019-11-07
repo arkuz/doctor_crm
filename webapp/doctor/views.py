@@ -141,7 +141,8 @@ class DoctorCaseAdd(AuthRequiredMethodView):
     def post(self):
         date = datetime.strptime(request.form.get('date'), '%d.%m.%Y')
         diagnosis = request.form.get('diagnosis')
-        new_case = Case(date=date, diagnosis=diagnosis)
+        patient_surename = request.form.get('patient_surename')
+        new_case = Case(date=date, diagnosis=diagnosis, patient_surename=patient_surename)
         db.session.add(new_case)
         db.session.commit()
         flash('Вы успешно зарегистрировались')

@@ -10,6 +10,10 @@
     <div class="form-group">
         {{ form.hidden_tag() }}
         <p>
+            {{ form.patient_surename.label }}<br>
+            {{ form.patient_surename() }}
+        </p>
+        <p>
             {{ form.date.label }}<br>
             {{ form.date() }}
         </p>

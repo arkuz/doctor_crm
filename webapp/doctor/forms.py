@@ -68,6 +68,12 @@ class TimingAddForm(FlaskForm):
 
 
 class CasesAddForm(FlaskForm):
+    patient_surename = StringField(
+        'Пациент',
+        validators=[DataRequired()],
+        render_kw={
+            'class': 'form-control',
+        })
     date = DateField(
         'Дата',
         validators=[DataRequired()],

@@ -7,6 +7,7 @@ class Case(db.Model):
     id = db.Column(db.Integer, primary_key=True) # noqa
     date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.now())
     diagnosis = db.Column(db.String, nullable=True)
+    patient_surename = db.Column(db.String, nullable=True)
     doctor_id = db.Column(db.Integer,
                           db.ForeignKey('doctor.id', ondelete='CASCADE'),
                           index=True,
@@ -25,9 +26,8 @@ class Case(db.Model):
             'id': self.id, # noqa
             'date': self.date,
             'diagnosis': self.diagnosis,
-            'id': self.id, # noqa
-            'id': self.id, # noqa
+            'patient_surename': self.patient_surename,
         }
 
     def __repr__(self):
-        return '<Case {0} {1} {2} {3}>'.format(self.id, self.id, self.diagnosis, self.date)
+        return '<Case {0} {1} {2} {3}>'.format(self.id, self.patient_surename, self.diagnosis, self.date)

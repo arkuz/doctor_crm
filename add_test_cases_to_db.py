@@ -12,26 +12,31 @@ cases = [
         'diagnosis': 'Болезни органов дыхания',
         'doctor_id': 3,
         'patient_id': 1,
+        'patient_surename': 'Иванов',
     },
     {
         'diagnosis': 'Болезни органов пищеварения',
         'doctor_id': 3,
         'patient_id': 2,
+        'patient_surename': 'Петров',
     },
     {
         'diagnosis': 'Инфекционные заболевания',
         'doctor_id': 3,
         'patient_id': 1,
+        'patient_surename': 'Пупкин',
     },
     {
         'diagnosis': 'Болзени сердечно-сосудистой системы',
         'doctor_id': 3,
         'patient_id': 2,
+        'patient_surename': 'Семенов',
     },
     {
         'diagnosis': 'Новообразования',
         'doctor_id': 3,
         'patient_id': 1,
+        'patient_surename': 'Антонов',
     },
 
 ]
@@ -43,6 +48,7 @@ with app.app_context():
             diagnosis=item['diagnosis'],
             doctor_id=item['doctor_id'],
             patient_id=item['patient_id'],
+            patient_surename=item['patient_surename'],
         )
         db.session.add(new_cases)
         db.session.commit()
