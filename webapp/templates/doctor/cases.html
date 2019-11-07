@@ -22,7 +22,7 @@
             {% for elem in cases %}
             <tr>
                 <td>{{ elem.doctor.surname }}</td>
-                <td>{{ elem.date }}</td>
+                <td>{{ elem.date.strftime("%d.%m.%Y") }}</td>
                 <td>{{ elem.diagnosis }}</td>
             </tr>
             {% endfor %}
