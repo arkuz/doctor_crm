@@ -10,11 +10,13 @@ class Case(db.Model):
     doctor_id = db.Column(db.Integer,
                           db.ForeignKey('doctor.id', ondelete='CASCADE'),
                           index=True,
-                          nullable=True,)
+                          nullable=True,
+                          )
     patient_id = db.Column(db.Integer,
                            db.ForeignKey('patient.id', ondelete='CASCADE'),
                            index=True,
-                           nullable=True,)
+                           nullable=True,
+                           )
     doctor = db.relationship('Doctor', backref='case')
     patient = db.relationship('Patient', backref='case')
 

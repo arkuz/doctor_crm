@@ -68,13 +68,14 @@ class TimingAddForm(FlaskForm):
 
 
 class CasesAddForm(FlaskForm):
-    date = DateField('Дата',
-                    validators=[DataRequired()],
-                    render_kw={
-                        'class': 'form-control',
-                        'autofocus': True,
-                        'placeholder': 'mm.dd.yyyy',
-                    })
+    date = DateField(
+        'Дата',
+        validators=[DataRequired()],
+        render_kw={
+            'class': 'form-control',
+            'autofocus': True,
+            'placeholder': 'mm.dd.yyyy',
+        })
 
     diagnosis = StringField('Диагноз',
                             validators=[DataRequired()],
